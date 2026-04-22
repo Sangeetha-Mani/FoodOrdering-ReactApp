@@ -1,0 +1,15 @@
+Foodorder app
+component lists
+
+--Header
+    Logo
+    nav-items
+--Body
+    search
+    resturantContainer
+      resturantCard
+--Footer
+    copywrite
+    Links
+    Address
+    

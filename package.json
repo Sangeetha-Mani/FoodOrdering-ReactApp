@@ -1,0 +1,27 @@
+{
+  "name": "react-learning",
+  "version": "1.0.0",
+  "description": "learning",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sangeetha-Mani/React.git"
+  },
+  "author": "sangeetha",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sangeetha-Mani/React/issues"
+  },
+  "homepage": "https://github.com/Sangeetha-Mani/React#readme",
+  "devDependencies": {
+    "parcel": "^2.16.4"
+  },
+  "dependencies": {
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5"
+  }
+}
