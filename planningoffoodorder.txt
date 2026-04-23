@@ -13,3 +13,6 @@ component lists
     Links
     Address
     
+
+git branch changed to main and updated it in local repository
+git repository name changed to FoodOrdering-ReactApp
