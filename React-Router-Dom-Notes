@@ -1,0 +1,22 @@
+To manage navigation between pages based on URL, we use the react-router-dom library.
+
+First, we configure routing using createBrowserRouter
+
+Then, we provide this router to the app using the RouterProvider component
+
+Earlier, we rendered AppLayout directly into the root
+
+Now, instead of that, we render RouterProvider and pass the router configuration
+
+
+let me tell again that  children routes
+
+why we go with children routes becuase we keep a common layout like header and footer and only change the main component based on url. 
+
+so we create a children routes to root level component like applayout. children:[{same configuration}}
+
+then react router provides the Outlet component to render the children componet based on url inside the parent component .. outlet compent replaced by children compent
+
+
+Link is superpower from react-router-dom 
+Link load the compoenent/page based on url without reloading the whole page
