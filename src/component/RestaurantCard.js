@@ -1,6 +1,8 @@
 import { CDN_URL } from "../Utils/config";
 
 const ResturantCard = ({resData}) => {
+
+
    const {name, cuisines ,avgRating, costForTwo , cloudinaryImageId} = resData.info;
     return (
         <>

@@ -1,14 +1,22 @@
 // import { LOGO_URL } from "../Utils/constants";
-//import { useState } from "react";
+import { useState, useEffect } from "react";
 import {Link} from 'react-router-dom';
 import useOnlineStatus from "../Utils/useOnlineStatus";
+import Cart from './Cart';
+import {useSelector } from 'react-redux';
 
 
 const HeaderComponent = () => {
   const onlineStatus = useOnlineStatus();
+  const [cartItems, setCartItems] = useState([]);
   // const [loginBtn, setLoginBtn] = useState("Login")
-
+ const getcartItems = useSelector((store) => store.cart.items)
+ console.log(cartItems,'check cart items from selector')
   console.log(onlineStatus,'cecks')
+  //whenever the store state is changed then getCartItem will update the state 
+  useEffect(()=>{
+    setCartItems(getcartItems)
+  },[getcartItems])
 
   return (
     <div className="flex m-5 justify-between">
@@ -21,7 +29,9 @@ const HeaderComponent = () => {
           <li className="p-4"><Link to="/about">About US</Link></li>
           <li className="p-4"><Link to="/contact">Contact US</Link></li>
           <li className="p-4"><Link to="/grocery">Grocery</Link></li>
-          <li className="p-4">Cart</li>
+          <li className="p-4">{
+            
+            <Cart items={cartItems}/>}</li>
           <li>
             <Link to='/login'><button className="login-btn" 
           // onClick={()=>{

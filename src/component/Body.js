@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import ShimmerUI from "./shimmerUI";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../Utils/useOnlineStatus";
+import {useDispatch} from "react-redux";
+import {addItem } from "../Slices/cartSlice";
 
 
 /* topics covered from this foodordering app is 
@@ -24,7 +26,9 @@ const BodyComponent = () => {
   const [searchTxt, setSearchTxt] = useState(""); // controlled components
   // const [sortRating, setSortRating] = useState([]);
   const onlineStatus = useOnlineStatus();
-  console.log(onlineStatus,'book')
+  const dispatch = useDispatch(); // which return function
+
+
  
   //it will called after rendering the component
   useEffect(() => {
@@ -124,13 +128,19 @@ const BodyComponent = () => {
           
            filteredRestaurantList.map((resturant) => {
               return (
-               
-                <Link  to={"/restaurant/" + resturant.info.id} key={resturant.info.id}>
+                <div className="flex flex-col items-center" key={resturant.info.id}>
+                <Link  to={"/restaurant/" + resturant.info.id} >
                 
                 {true ? <RestaurantCardPromoted resData={resturant}/> :
                 <ResturantCard resData={resturant} /> 
                 }
                 </Link>
+                <button 
+                className="bg-blue-400 text-white hover:bg-blue-600 cursor-pointer w-40"
+                  onClick={() => 
+                  {  console.log(resturant.info.name,'check thename');
+                    dispatch(addItem(resturant.info.name))}}>Add to Cart</button>
+                </div>
               );
             })
           )}
