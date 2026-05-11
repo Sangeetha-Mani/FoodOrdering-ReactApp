@@ -1,0 +1,5 @@
+“By default errors are hidden. 
+When the user interacts with a field and leaves it (onBlur),
+ Formik marks it as touched. 
+ Validation checks the value, and if it’s empty, sets an error. 
+The UI displays the error only when the field is touched and has an error.”

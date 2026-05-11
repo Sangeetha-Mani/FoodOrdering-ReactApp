@@ -1,8 +1,10 @@
-import ResturantCard from "./RestaurantCard";
+import ResturantCard , {withRestaurantCard}from "./RestaurantCard";
 import resObj from "../Utils/mockdata";
 import { useState, useEffect } from "react";
 import ShimmerUI from "./shimmerUI";
 import { Link } from "react-router-dom";
+import useOnlineStatus from "../Utils/useOnlineStatus";
+
 
 /* topics covered from this foodordering app is 
 declartive UI - describe how ui should look and react automaticaly updates the dom when state changes . one of the example is controlled component
@@ -17,26 +19,39 @@ react is fast by reconcillation process and update only changed part into real d
 */
 
 const BodyComponent = () => {
-  const [restaurantList, setRestaurantList] = useState([]); //nevertouch 
+  const [restaurantList, setRestaurantList] = useState([]); 
   const [filteredRestaurantList, setFilteredRestaurantList] = useState([]);
   const [searchTxt, setSearchTxt] = useState(""); // controlled components
-
+  // const [sortRating, setSortRating] = useState([]);
+  const onlineStatus = useOnlineStatus();
+  console.log(onlineStatus,'book')
+ 
   //it will called after rendering the component
   useEffect(() => {
     fetchData();
-    // setSearchTxt("");
+    // setSearchTxt("");a
   }, []);
 
+   const RestaurantCardPromoted = withRestaurantCard(ResturantCard)
+
   const fetchData = async () => {
-    const response = await fetch(
+    try{
+
+       const response = await fetch(
       "https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.8358507&lng=79.7055922&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING",
     );
+    if(!response.ok) throw new Error("API Failed" + response.status)
     const json = await response.json();
+    console.log(json,'from fetchDAta')
     const data =
       json?.data?.cards[3]?.card?.card?.gridElements?.infoWithStyle
         ?.restaurants;
     setRestaurantList(data);
     setFilteredRestaurantList(data);
+    } catch(err) {
+      console.log(err)
+    }
+   
   };
   console.log(filteredRestaurantList, "check");
   //conditional rendering
@@ -44,22 +59,34 @@ const BodyComponent = () => {
   //   return <ShimmerUI/>
   // }
 
-  return restaurantList.length === 0 ? (
+  const handleSortRating = () => {
+    let sortRating1 = [...restaurantList].sort((a,b)=>
+      {
+        
+       return  a?.info?.avgRating - b?.info?.avgRating});
+      console.log(sortRating1) 
+      setFilteredRestaurantList(sortRating1)
+    
+  }
+ 
+
+  return  !filteredRestaurantList || !restaurantList || restaurantList.length === 0 ? (
     <ShimmerUI />
   ) : (
     <>
-      <div className="main">
-        <div className="search-container">
+      <div className="m-2 p-2">
+        <div className="m-2 p-2 border-2 ">
           {/* bind the input value to local state variable (searchTxt) and input update the state is controlled component */}
           <input
             type="text"
             placeholder="search food"
             value={searchTxt}
             onChange={(e) => {
+            // setSortRating([])
               setSearchTxt(e.target.value);
             }}
           />
-          <button
+          <button className="bg-pink-300 rounded-b-sm"
             onClick={() => {
               // get the input searchTxt and filteredResturant from original list. and update the ui
               let filteredList = restaurantList.filter((res) => {
@@ -79,21 +106,30 @@ const BodyComponent = () => {
               const filteredList = restaurantList.filter(
                 (res) => res.info.avgRating > 4,
               );
+              // setSortRating([])
               setFilteredRestaurantList(filteredList);
             }}
           >
             Top Rated Resturants
           </button>
+          <button onClick={(()=>{handleSortRating()})}>Sort Rating</button>
         </div>
 
-        <div className="res-container">
+        <div className="p-2 m-2 flex flex-wrap ">
+        {
+           }
           {filteredRestaurantList.length === 0 ? (
             <div>No Restaurant Available! Kindly Search Again!</div>
           ) : (
-            filteredRestaurantList.map((resturant) => {
+          
+           filteredRestaurantList.map((resturant) => {
               return (
-                <Link to={"/restaurant/" + resturant.info.id} key={resturant.info.id}>
-                <ResturantCard resData={resturant} />
+               
+                <Link  to={"/restaurant/" + resturant.info.id} key={resturant.info.id}>
+                
+                {true ? <RestaurantCardPromoted resData={resturant}/> :
+                <ResturantCard resData={resturant} /> 
+                }
                 </Link>
               );
             })

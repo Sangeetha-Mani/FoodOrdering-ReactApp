@@ -1,40 +1,36 @@
-import { MENU_URL } from "../Utils/constants";
-import {useEffect, useState} from 'react';
 import { useParams } from "react-router-dom";
+import useRestaurantMenu from "../Utils/useRestaurantMenu";
+import useOnlineStatus from "../Utils/useOnlineStatus";
 
 const ResturantMenu = () => {
-const [resMenu, setRestMenu] = useState(null);
-const {resId} = useParams();
-console.log(resId);
+  const { resId } = useParams();
+// desturing the object which returned by useRestaurantMenu
+// we have to handle when network disconnected
+  const { resMenu, loading, error } = useRestaurantMenu(resId);
+  const onlineStatus = useOnlineStatus();
+
+  console.log(onlineStatus);
+  if(onlineStatus === false)  return <div>Opps! you are offline! please check your network!</div>
+
+  if (loading) {
+    return <div> Loading...</div>;
+  }
+  //in javacript if there is a text the it is true in if condition
+  if (error) return <div>{error}</div>;
 
 
-useEffect(()=>{
-    fetchAPI();
-},[])
-
-const fetchAPI = async () => {
-    try{
-        const data = await fetch(MENU_URL + resId);
-        if (!response.ok) {
-      throw new Error("API failed");
-    }
-    const res = await data.json();
-    console.log(res)
-
-    }catch(err) {
-        console.log(err,"error")
-    }
-    
-}
-    return(
-        <div>
-            <h1>name of the resturant</h1>
-            <h3>price</h3>
-            <hr/>
-            <h2>Menu</h2>
-            
-        </div>
-    )
-}
+  return (
+    <div>
+      <h1>name of the resturant</h1>
+      <h3>price</h3>
+      <hr />
+      <h2>Menu</h2>
+      <div>
+        <h1>helo</h1>
+        <h2>content of header</h2>
+      </div>
+    </div>
+  );
+};
 
 export default ResturantMenu;
