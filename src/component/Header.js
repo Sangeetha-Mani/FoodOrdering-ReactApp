@@ -8,15 +8,8 @@ import {useSelector } from 'react-redux';
 
 const HeaderComponent = () => {
   const onlineStatus = useOnlineStatus();
-  const [cartItems, setCartItems] = useState([]);
-  // const [loginBtn, setLoginBtn] = useState("Login")
+
  const getcartItems = useSelector((store) => store.cart.items)
- console.log(cartItems,'check cart items from selector')
-  console.log(onlineStatus,'cecks')
-  //whenever the store state is changed then getCartItem will update the state 
-  useEffect(()=>{
-    setCartItems(getcartItems)
-  },[getcartItems])
 
   return (
     <div className="flex m-5 justify-between">
@@ -31,7 +24,7 @@ const HeaderComponent = () => {
           <li className="p-4"><Link to="/grocery">Grocery</Link></li>
           <li className="p-4">{
             
-            <Cart items={cartItems}/>}</li>
+            <Cart items={getcartItems}/>}</li>
           <li>
             <Link to='/login'><button className="login-btn" 
           // onClick={()=>{
