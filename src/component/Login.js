@@ -27,9 +27,11 @@ const Login = () => {
     })
 
     return (
-        <div>
-            <form onSubmit={formik.handleSubmit}>
-                <input type="text" name="name" value={formik.values.name} 
+        <div className="flex flex-col justify-center items-center h-screen">
+            <form className="flex flex-col items-center"  onSubmit={formik.handleSubmit}>
+                <div className="m-2">
+                <label>Name : </label>
+                <input className="focus ml-2 border border-black" type="text" name="name" value={formik.values.name} 
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}/>
                 {/* handlechange get the value 
@@ -37,10 +39,16 @@ const Login = () => {
                 state of value.name and 
                 componeent re-render then update the ui */}
                 {formik.touched.name && formik.errors.name? <div>{formik.errors.name}</div> :null}
-                <input type="email" name="email" value={formik.values.email}
+                </div>
+                <div className="m-2">
+                <label>Email : </label>
+                <input className="ml-3 border border-black" type="email" name="email" value={formik.values.email}
                 onChange={formik.handleChange} onBlur={formik.handleBlur} />
                 {formik.touched.email && formik.errors.email? <div>{formik.errors.email}</div> : null}
-                <button type="submit">Submit</button>
+                </div>
+                <button className="  bg-blue-600 text-white p-2 m-2 border border-blue-950"  type="submit"
+                disabled={!(formik.isValid && formik.dirty)}
+                >Submit</button>
             </form>
             
         </div>
