@@ -29,6 +29,7 @@ const BodyComponent = () => {
   const [filteredRestaurantList, setFilteredRestaurantList] = useState([]);
   const [searchTxt, setSearchTxt] = useState(""); // controlled components
   const [selectedValue, setSelectedValue] = useState("sort"); // controlled select elemt value
+ 
   // const [sortRating, setSortRating] = useState([]);
   const onlineStatus = useOnlineStatus();
   const dispatch = useDispatch(); // which return function
@@ -98,11 +99,13 @@ const BodyComponent = () => {
     <ShimmerUI />
   ) : (
     <>
-      <div className="m-2 p-2">
-        <div className="m-2 p-2 border-2 ">
+      <div className="max-w-[980px] mx-auto">
+        <h1 className="font-bold text-2xl">Restaurants with online food delivery in Kanchipuram</h1>
+        <div className=" p-2 ">
+          
           {/* bind the input value to local state variable (searchTxt) and input update the state is controlled component */}
           <input
-            className="border-2 border-be-indigo-600 border-be-indigo-500 border-x-white border-bs-white"
+            className="border border-be-black-400 border-be-black-400 border-x-white border-bs-white"
             type="text"
             placeholder="search food"
             value={searchTxt}
@@ -112,7 +115,7 @@ const BodyComponent = () => {
             }}
           />
           <button
-            className="bg-pink-300 rounded-b-sm"
+            className="bg-orange-300 rounded-2xl p-2 border border-black ml-4 cursor-pointer"
             onClick={() => {
               // get the input searchTxt and filteredResturant from original list. and update the ui
               let filteredList = restaurantList.filter((res) => {
@@ -128,11 +131,12 @@ const BodyComponent = () => {
           </button>
 
           <select
+
             value={selectedValue}
             onChange={(e) => {
               handleSorting(e);
             }}
-            className="m-2 p-2 border border-black "
+            className="m-2 p-2 border border-black cursor-pointer"
           >
             <option value="sort">--Sort--</option>
             {sortOptions.map((ele) => {
@@ -145,31 +149,33 @@ const BodyComponent = () => {
           </select>
         </div>
 
-        <div className="p-2 m-2 flex flex-wrap ">
+        <div className="p-2 m-2 flex  flex-wrap ">
           {filteredRestaurantList.length === 0 ? (
             <div>No Restaurant Available! Kindly Search Again!</div>
           ) : (
             filteredRestaurantList.map((resturant) => {
               return (
                 <div
-                  className="flex flex-col items-center"
+                  className="flex flex-col rounded-lg overflow-hidden shadow-lg bg-white h-full"
                   key={resturant.info.id}
                 >
                   <Link to={"/restaurant/" + resturant.info.id}>
-                    {true ? (
+                    {/* {true ? (
                       <RestaurantCardPromoted resData={resturant} />
-                    ) : (
+                    ) : ( */}
                       <ResturantCard resData={resturant} />
-                    )}
+                    
                   </Link>
+                  <div className="flex justify-center">
                   <button
-                    className="bg-blue-400 text-white hover:bg-blue-600 cursor-pointer w-40"
+                    className="bg-orange-400 text-black mb-3  hover:bg-orange-700-50 cursor-pointer w-40 rounded-2xl"
                     onClick={() => {
                       dispatch(addItem(resturant.info.name));
                     }}
                   >
                     Add to Cart
                   </button>
+                  </div>
                 </div>
               );
             })

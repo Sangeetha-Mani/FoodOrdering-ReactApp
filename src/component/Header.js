@@ -4,16 +4,19 @@ import {Link} from 'react-router-dom';
 import useOnlineStatus from "../Utils/useOnlineStatus";
 import Cart from './Cart';
 import {useSelector } from 'react-redux';
-
-
+//import foodLogo from "../assests/food-logo.jpg";
+const imageUrl = new URL('../assests/logo.webp', import.meta.url);
 const HeaderComponent = () => {
+  //console.log(foodLogo)
   const onlineStatus = useOnlineStatus();
+  
 
  const getcartItems = useSelector((store) => store.cart.items)
 
   return (
-    <div className="flex m-5 justify-between">
-      <img className="w-20 h-18" alt="Logo" src="#" />
+    <div className="flex  justify-between sticky top-0 z-50 bg-white shadow-md">
+     
+      <img className="w-20 h-20" alt="Logo" src={imageUrl.toString()} />
       {/* {LOGO_URL}  */}
       <div className=" ">
         <ul className="flex">
@@ -26,8 +29,10 @@ const HeaderComponent = () => {
             
             <Cart items={getcartItems}/>}</li>
           <li>
-            <Link to='/login'><button className="login-btn" 
-          // onClick={()=>{
+            <Link to='/login'><button 
+            className="bg-orange-600
+             text-black border-2 border-black m-2 p-2"
+          // onClick={()=>{c
           //    loginBtn === "Login" ? setLoginBtn("Logout") : setLoginBtn("Login")
           // }}
           >Login</button></Link></li>

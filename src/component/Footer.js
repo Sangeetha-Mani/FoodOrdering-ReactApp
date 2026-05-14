@@ -1,8 +1,8 @@
 const FooterComponent = () => {
   return (
     <>
-      <div className="footer-container">
-        <p>@CopyWrite 2026</p>
+      <div className="flex bg-black text-white p-3 justify-around">
+        <p className="">@CopyWrite 2026</p>
         <ul>
           <li>
             <a href="Address"> Address </a>

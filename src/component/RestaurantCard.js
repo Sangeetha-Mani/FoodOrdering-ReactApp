@@ -6,13 +6,21 @@ const ResturantCard = ({resData}) => {
    const {name, cuisines ,avgRating, costForTwo , cloudinaryImageId} = resData.info;
     return (
         <>
-            <div className='p-2 m-2 bg-gray-400 flex-wrap hover:bg-gray-500'>
-                <img className='w-30' alt='res-logo'  src={ CDN_URL + cloudinaryImageId}/>
+            <div className='p-2 m-2 w-64  bg-white-400 hover:bg-yellow-100-500'>
+                <img className='h-48 w-full object-cover' alt='res-logo'  src={ CDN_URL + cloudinaryImageId}/>
                 {/* src={ CDN_URL + cloudinaryImageId}/> */}
-                <h4 className="font-bold text-lg">{name}</h4>
-                <h4 className="w-24 overflow-x-clip">{cuisines.join(',')}</h4>
-                <h4>{costForTwo}</h4>
-                <h4>{avgRating} Ratings</h4>
+                <div className="h-32 w-full object-cover">
+                    <h4 className="font-bold ">{name}</h4>
+                    <div className="font-semibold text-lime-500">
+                        <span>{costForTwo} </span>
+                        <span>{  " - " + avgRating} Ratings</span>
+                    </div>
+                
+                
+              
+                <h4 className="overflow-hidden text-gray-400 text-ellipsis">{cuisines.join(',')}</h4>
+                
+                </div>
             </div>
         </>
        
